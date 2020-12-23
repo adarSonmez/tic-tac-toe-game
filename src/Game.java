@@ -34,6 +34,7 @@ public class Game {
             player++;
             player %= 2;
 
+            determineTheWinner(matrix);
             gameOver = isGameOver(matrix);
         }
     }
@@ -41,7 +42,7 @@ public class Game {
     // Print initial table
     public static void blankTable(String[][] arr) {
         System.out.println("-------");
-        for(int r = 0; r < 3; r++) {
+        for (int r = 0; r < 3; r++) {
             System.out.print("|");
             for (int c = 0; c < 3; c++) {
                 String e = arr[r][c] = " ";
@@ -64,7 +65,7 @@ public class Game {
 
     public static void printTable(String[][] arr) {
         System.out.println("-------");
-        for(int r = 0; r < 3; r++) {
+        for (int r = 0; r < 3; r++) {
             System.out.print("|");
             for (int c = 0; c < 3; c++) {
                 System.out.print(arr[r][c] + "|");
@@ -75,18 +76,59 @@ public class Game {
         System.out.println("-------");
     }
 
+    // How to win
+    public static void determineTheWinner(String[][] arr) {
+        boolean isGameOver = false;
+        String whoWon = "";
+
+        // All winning combinations
+        // Check columns
+        for (int col = 0; col < 3; col++) {
+            if (arr[0][col].equals(arr[1][col]) && arr[0][col].equals(arr[2][col]) && !(arr[0][col].equals(" "))) {
+                isGameOver = true;
+                whoWon = arr[0][col];
+                break;
+            }
+        }
+        // Check rows
+        for (int row = 0; row < 3; row++) {
+            if (arr[row][0].equals(arr[row][1]) && arr[row][0].equals(arr[row][2]) && !arr[row][0].equals(" ")  && !isGameOver) {
+                isGameOver = true;
+                whoWon = arr[row][0];
+                break;
+            }
+        }
+
+        // Cross check
+        if (arr[0][0].equals(arr[2][2]) && arr[0][0].equals(arr[1][1]) && !arr[0][0].equals(" ") && !isGameOver) {
+            isGameOver = true;
+            whoWon = arr[2][2];
+        } else if (arr[0][2].equals(arr[1][1]) && arr[0][2].equals(arr[2][0]) && !arr[1][1].equals(" ") && !isGameOver) {
+            isGameOver = true;
+            whoWon = arr[1][1];
+        }
+
+        // Announce the winner and finish tha game
+        if (isGameOver) {
+            System.out.println("Player " + whoWon + " won the game!");
+            System.exit(0);
+        }
+    }
+
     // Detect if the game is over
     public static boolean isGameOver(String[][] arr) {
         int emptyBoxes = 0;
-        for(int r = 0; r < 3; r++) {
+        for (int r = 0; r < 3; r++) {
             for (int c = 0; c < 3; c++) {
                 if (arr[r][c].equals(" "))
                     emptyBoxes++;
             }
         }
-        if (emptyBoxes == 0)
-            System.out.println("Game Over...");
+        if (emptyBoxes == 0) {
+            System.out.println("It's a tie.");
+            System.exit(0);
+        }
 
-        return emptyBoxes == 0;
+        return false;
     }
 }
