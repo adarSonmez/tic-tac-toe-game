@@ -16,8 +16,17 @@ public class Game {
 
             System.out.print("Enter a row for player " + sign + ": ");
             int row = input.nextInt();
+            while (row < 1 || row > 3) {
+                System.out.println("No such row found. Enter again");
+                row = input.nextInt();
+            }
+
             System.out.print("Enter a col for player " + sign + ": ");
             int col = input.nextInt();
+            while (col < 1 || col > 3) {
+                System.out.println("No such column found. Enter again");
+                col = input.nextInt();
+            }
 
             // What if I enter chosen box
             if (!isTheBoxAvailable(matrix, row, col)) {
