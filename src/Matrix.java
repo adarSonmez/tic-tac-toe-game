@@ -25,9 +25,9 @@ public class Matrix {
 
     public void printTable(String[][] arr) {
         System.out.println("-------");
-        for (int r = 0; r < 3; r++) {
+        for (int r = 0; r < size; r++) {
             System.out.print("|");
-            for (int c = 0; c < 3; c++) {
+            for (int c = 0; c < size; c++) {
                 System.out.print(arr[r][c] + "|");
                 if (c == 2)
                     System.out.println();
